@@ -11,16 +11,16 @@ provided in separate files.
 
 ## Data sets created
 
-###full_set 
+full_set 
 full_set is all the original measurements combined with the subject and
 activity identifiers for both the test group and the training group
 
-###sub_set 
+sub_set 
 sub_set is original measurements for mean or standard deviation combined 
 with the subject and activity identifiers for both the test group and the 
 training group
 
-###sum_set 
+sum_set 
 sum_set is the sum of the original measure for mean and standard deviation
 by each subject and each activity for both the training and test groups
 
