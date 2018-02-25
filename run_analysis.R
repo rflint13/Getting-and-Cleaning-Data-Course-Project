@@ -28,8 +28,10 @@ y_test <-  read.table("./UCI HAR Dataset/test/y_test.txt", col.names = "activity
 x_test <-  read.table("./UCI HAR Dataset/test/X_test.txt", col.names = features$featurelabel)
 
 ##Add in Activity labels
-y_train <- merge(y_train,activity_labels, by.x = "activityid", by.y = "index")
-y_test <- merge(y_test,activity_labels, by.x = "activityid", by.y = "index")
+y_train[,2] = sapply(y_train[,1],function (x){activity_labels[x,2]})
+y_test[,2] = sapply(y_test[,1],function (x){activity_labels[x,2]})
+names(y_train)[2] <- "activity"
+names(y_test)[2] <- "activity"
 
 ##Identify source data
 subject_train <- cbind(subject_train,"train",stringsAsFactors = FALSE )
@@ -40,8 +42,9 @@ names(subject_test) <- c("subject","source")
 ## Merge sets together
 full_set <- rbind(cbind(subject_train,y_train,x_train),cbind(subject_test,y_test,x_test))
 
+
 ## Get subset with only measured means and standard deviations (std)
-sub_set <- full_set[,grepl("^source|^subject|^activity$|mean[XYZ]*|std[XYZ]*",names(full_set))]
+sub_set <- full_set[,grepl("^source|^subject|^activity$|mean[XYZ]*$|std[XYZ]*$",names(full_set))]
 
 ## Create summary set calculating mean of each measure by activity and subject
 sum_set <- sub_set %>% group_by(subject,source,activity) %>% summarize_all(mean)
